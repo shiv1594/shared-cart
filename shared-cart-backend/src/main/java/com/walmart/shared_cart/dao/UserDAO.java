@@ -18,6 +18,10 @@ public class UserDAO {
     @PostConstruct
     private void postConstruct() {
         this.userMap = new HashMap<>();
+        User defaultUser = new User(currUserId, "Chandler", "Bing",
+                new Address(0, 0, "90", "Bedford Street", "New York", "New York", "US", 10028), null, null, 0);
+        userMap.put(currUserId, defaultUser);
+
         this.currUserId = 10000L;
         this.currAddressId = 800L;
         List<Item> chandlerItems = new ArrayList<>();

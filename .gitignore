@@ -2,3 +2,5 @@ shared-cart-ui/node_modules/
 
 .idea/
 
+target/
+shared-cart-backend/.idea/

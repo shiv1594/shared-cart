@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class SharedCartService {
 
-    private static final String BASE_URL = "http://localhost:3000/";
+    private static final String BASE_URL = "http://localhost:3000/r/";
 
     @Autowired
     SharedCartDAO sharedCartRepo;
@@ -33,15 +33,16 @@ public class SharedCartService {
         return sharedCartRepo.getAll().stream().filter(sc -> sc.getOwner().getUserId().equals(userId)).collect(Collectors.toList());
     }
 
-    public String createSharedCart(User user, Item item) {
+    public String createSharedCart(User user, Item item, String cartName) {
         String uniqueUrl = RandomStringUtils.randomAlphanumeric(7);
+        String cartUrl = BASE_URL + uniqueUrl;
         List<User> members = new ArrayList<>();
         user.getUserItems().add(item);
         user.setTotalAmount(item.getPrice());
         user.setSharedCartUrl(uniqueUrl);
         members.add(user);
         double cartTotal = item.getPrice();
-        SharedCart sharedCart = new SharedCart(uniqueUrl, "Default Name", user, members,cartTotal, user.getAddress().getZipCode(), 1);
+        SharedCart sharedCart = new SharedCart(uniqueUrl, cartUrl, cartName, user, members,cartTotal, user.getAddress().getZipCode(), 1);
         sharedCartRepo.addSharedCartDetails(uniqueUrl, sharedCart);
         return BASE_URL + uniqueUrl;
     }
