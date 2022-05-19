@@ -4,6 +4,7 @@ import com.walmart.shared_cart.dao.SharedCartDAO;
 import com.walmart.shared_cart.model.Item;
 import com.walmart.shared_cart.model.SharedCart;
 import com.walmart.shared_cart.model.User;
+import com.walmart.shared_cart.model.UserSharedCart;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,33 @@ public class SharedCartService {
     public Collection<SharedCart> getByUserId(Long userId) {
         return sharedCartRepo.getAll().stream().filter(sc -> sc.getOwner().getUserId().equals(userId)).collect(Collectors.toList());
     }
+
+    public Collection<UserSharedCart> getAllSharedCartsByUserId(User user) {
+        Collection<SharedCart> sharedCarts = sharedCartRepo.getAll();
+        Collection<UserSharedCart> userSharedCarts = new ArrayList<>();
+        List<String> userCartMembers = new ArrayList<>();
+        List<User> cartMembers;
+        for (SharedCart s: sharedCarts){
+            String url = s.getCartUrl();
+            cartMembers = s.getCartMembers();
+            if (url.equals(user.getSharedCartUrl())) {
+                for (User u : cartMembers) {
+                    userCartMembers.add(u.getFirstName());
+                }
+                UserSharedCart userSharedCart = new UserSharedCart(null,null,null,null,0.0,0,0);
+                userSharedCart.setUser(user);
+                userSharedCart.setCartUrl(url);
+                userSharedCart.setCartName(s.getCartName());
+                userSharedCart.setCartTotal(s.getCartTotal());
+                userSharedCart.setZipcode(s.getZipcode());
+                userSharedCart.setMemberNames(userCartMembers);
+                userSharedCart.setTotalMembers(userCartMembers.size());
+                userSharedCarts.add(userSharedCart);
+            }
+        }
+        return userSharedCarts;
+    }
+
 
     public String createSharedCart(User user, Item item, String cartName) {
         String uniqueUrl = RandomStringUtils.randomAlphanumeric(7);

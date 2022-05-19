@@ -1,10 +1,7 @@
 package com.walmart.shared_cart.controller;
 
 import com.walmart.shared_cart.dto.CreateSharedCartDto;
-import com.walmart.shared_cart.model.Address;
-import com.walmart.shared_cart.model.Item;
-import com.walmart.shared_cart.model.SharedCart;
-import com.walmart.shared_cart.model.User;
+import com.walmart.shared_cart.model.*;
 import com.walmart.shared_cart.service.ItemService;
 import com.walmart.shared_cart.service.SharedCartService;
 import com.walmart.shared_cart.service.UserService;
@@ -42,18 +39,9 @@ public class SharedCartController {
     }
 
     @GetMapping("/user/{userId}")
-    public Collection<SharedCart> getUsersSharedCarts(@PathVariable Long userId) {
-        List<SharedCart> userShareCarts = new ArrayList<>();
-        Collection<SharedCart> allSharedCarts = sharedCartService.getAllSharedCarts();
-        for (SharedCart cart : allSharedCarts) {
-            for (User member : cart.getCartMembers()) {
-                if (member.getUserId().equals(userId)) {
-                    userShareCarts.add(cart);
-                    break;
-                }
-            }
-        }
-        return userShareCarts;
+    public Collection<UserSharedCart> getUsersSharedCarts(@PathVariable Long userId) {
+        User user = userService.getUser(userId);
+        return sharedCartService.getAllSharedCartsByUserId(user);
     }
 
     @GetMapping("/{cartUrl}/total")
