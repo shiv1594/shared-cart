@@ -5,6 +5,8 @@ import SharedCart from './components/SharedCart'
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
 import PersonalCart from './components/PersonalCart';
+import SharedCartOpen from './components/SharedCartOpen';
+import ProductDetails from './components/ProductDetals';
 
 const App = () => {
   return (
@@ -12,6 +14,12 @@ const App = () => {
       <Navbar />
       <Router>
         <Switch>
+          <Route exact path="/sharedcartopen">
+            <SharedCartOpen />
+          </Route>
+          <Route exact path="/productdetails">
+            <ProductDetails />
+          </Route>
           <Route exact path="/personalcart">
             <PersonalCart />
           </Route>
@@ -21,7 +29,8 @@ const App = () => {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/r/*" component={SharedCart}/>
+          <Route path="/r/*" component={SharedCart} />
+
         </Switch>
       </Router>
     </div>

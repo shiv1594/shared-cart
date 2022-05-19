@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles, Paper, Container, Typography, Button, DialogTitle, Dialog, DialogContent } from '@material-ui/core';
+import { makeStyles, Paper, Container, Typography, Button, DialogTitle, Dialog, DialogContent, Link } from '@material-ui/core';
 
 const useStyles = makeStyles({
     container: {
@@ -37,12 +37,14 @@ const SharedCartContent = (props) => {
                         className={classes.sharedcartbutton}>
                         Share
                     </Button>
-                    <Button
-                        variant="contained"
-                        size="large"
-                        className={classes.sharedcartbutton}>
-                        Open
-                    </Button>
+                    <Link href="/sharedcartopen">
+                        <Button
+                            variant="contained"
+                            size="large"
+                            className={classes.sharedcartbutton}>
+                            Open
+                        </Button>
+                    </Link>
                 </div>
             </Container>
 

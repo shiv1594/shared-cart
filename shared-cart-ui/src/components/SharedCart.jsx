@@ -23,12 +23,6 @@ const useStyles = makeStyles({
     }
 })
 
-function createCart(data) {
-    axios.post('http://localhost:8080/sharedCart/10000/create', data).then(resp => {
-        console.log(resp);
-    });
-}
-
 const SharedCart = (props) => {
     const classes = useStyles()
     const [openPopup, setOpenPopup] = useState(false);
@@ -66,6 +60,13 @@ const SharedCart = (props) => {
                 console.log(res);
             })
     }, [])
+
+    const createCart = (data) => {
+        axios.post('http://localhost:8080/sharedCart/10000/create', data).then(response => {
+            console.log(response);
+            fetchUserData(userId);
+        })
+    }
 
 
     const addUserToCart = (newUser) => {
@@ -122,6 +123,7 @@ const SharedCart = (props) => {
                                 setLoggedIn(true);
                             }}>Login</Button>
                     </div>
+                    
                 </DialogContent>
             </Dialog>
 
@@ -171,8 +173,6 @@ const SharedCart = (props) => {
                             className={classes.button}
                             onClick={() => {
                                 createCart({ "cartName": cartName, "itemId": 100 });
-                                console.log(userId);
-                                fetchUserData(userId);
                                 setOpenPopup(false)
                             }}>
                             Done</Button>
