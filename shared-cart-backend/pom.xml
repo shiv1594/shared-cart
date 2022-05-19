@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.walmart.services</groupId>
-    <artifactId>shared-cart-app</artifactId>
+    <artifactId>shared-cart-backend</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>Shared-Cart</name>
+    <name>shared-cart</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.10</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
